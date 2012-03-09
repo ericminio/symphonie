@@ -1,0 +1,14 @@
+
+<table>
+
+<% @orders.each do |order| %>
+  <tr>
+    <td><%= order.name %></td>
+    <td><%= order.address %></td>
+    <td><%= order.color %></td>
+
+  </tr>
+
+<% end %>
+
+    </table>
