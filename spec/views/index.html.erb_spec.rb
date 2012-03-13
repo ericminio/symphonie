@@ -2,16 +2,38 @@ require 'spec_helper'
 
 describe "orders/index.html.erb" do
 
-  it "displays all orders" do
-    assign(:orders, [Order.new(:name=>'Fred', :address=>'Ici', :color=>'yellow')])
+  before(:each) do
+    assign(:orders, [Order.new(:name => 'Fred'), Order.new(:name => 'Vincent')])
     render
-    rendered.should have_selector("td", :count => 3)
-    rendered.should match_selector("td") do |name, address, color|
-      name.should contain( 'Fred' )
-      address.should contain( 'Ici' )
-      color.should contain( 'yellow' )
-    end
   end
 
+  subject { list }
+
+  it "displays a list" do
+    subject.should_not be_nil
+  end
+
+  describe "the list" do
+
+    it "displays the 2 items" do
+      subject.should have_selector("li", :count => 2)
+    end
+
+    it "each items displays the name" do
+      subject.should match_selector("li") do |first, second|
+        first.should contain('Fred')
+        second.should contain('Vincent')
+      end
+    end
+
+  end
+
+  def list
+    component_under_test = nil
+    rendered.should match_selector("ul") do |list|
+      component_under_test = list
+    end
+    component_under_test
+  end
 
 end

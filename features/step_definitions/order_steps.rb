@@ -1,16 +1,22 @@
 
-
-Given /^"([^"]*)" wants to order a human symphony t\-shirt$/ do |buyer|
-  @name = buyer
+When /^"([^"]*)" orders a t\-shirt to be sent at "([^"]*)"$/ do |name, address|
+  visit "/orders/new"
+  fill_in 'order[name]', :with => name
+  fill_in 'order[address]', :with => address
+  click_button 'Send it to me asap'
 end
 
-When /^he orders a white t\-shirt to be send at "([^"]*)"$/ do |address|
-  Order.create!(:name=>@name, :address=>address, :color=>"white")
-end
-
-Then /^he sees in the waiting list that "([^"]*)" waits for a white t\-shirt to be shipped to "([^"]*)"$/ do |buyer, address|
+Then /^the order list contains "([^"]*)"$/ do |buyer|
   visit "/orders"
   page.should have_content(buyer)
-  page.should have_content(address)
-  page.should have_content("white")
+end
+
+And /^the system knows that "([^"]*)" wants a t\-shirt to be sent at "([^"]*)"$/ do |name, address|
+  Order.find_by_name(name).address.should == address
+end
+
+Then /^the system has sent a mail containing "([^"]*)" to the following recipients$/ do |body, table|
+  table.rows.each { |recipient|
+  }
+  pending
 end
