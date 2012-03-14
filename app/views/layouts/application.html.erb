@@ -4,9 +4,14 @@
   <title>Symphonie humaine</title>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body style="background: #000;color: #FFFFFF;">
 
-<%= yield %>
+<table border="0">
+  <tr>
+    <td valign="top"><a href="/" ><img src="/logo.png" width="100" height="100" /></a></td>
+    <td valign="top"><center><%= yield %></center></td>
+  </tr>
+</table>
 
 </body>
 </html>
